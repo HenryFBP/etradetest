@@ -2,7 +2,7 @@
 
     poetry install
     poetry shell
-    python .\etrade_python_client\
+    python .\EtradeTest\
 
 # links
 
