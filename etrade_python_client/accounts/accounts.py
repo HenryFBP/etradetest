@@ -181,7 +181,7 @@ class Accounts:
 
         # Add parameters and header information
         params = {"instType": self.account["institutionType"], "realTimeNAV": "true"}
-        headers = {"consumerkey": config["DEFAULT"]["CONSUMER_KEY"]}
+        headers = {"consumerkey": self.config["DEFAULT"]["CONSUMER_KEY"]}
 
         # Make API call for GET request
         response = self.session.get(url, header_auth=True, params=params, headers=headers)

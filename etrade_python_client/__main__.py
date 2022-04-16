@@ -102,9 +102,11 @@ def main_menu(session, config, base_url):
 
 
 if __name__ == "__main__":
-    selected_path = someutils.user_choose_dict(CONFIG_CHOICES, "Please select a config path:")
+    selected_config_fn = someutils.user_choose_dict(CONFIG_CHOICES, "Please select a config path:")
 
-    if not selected_path:
+    if not selected_config_fn:
         raise Exception("Quitting.")
 
-    oauth(get_config(selected_path))
+    selected_config = selected_config_fn()
+
+    oauth(selected_config)

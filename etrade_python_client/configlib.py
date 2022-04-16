@@ -1,13 +1,9 @@
 import configparser
 import os
+import time
 
 SANDBOX_CONFIG_PATH = '~/.etrade/config.sandbox.secret.ini'
 PROD_CONFIG_PATH = '~/.etrade/config.production.secret.ini'
-
-CONFIG_CHOICES = {
-    "1": SANDBOX_CONFIG_PATH,
-    "2": PROD_CONFIG_PATH,
-}
 
 
 def get_config(config_path='~/.etrade/config.sandbox.secret.ini') -> configparser.ConfigParser:
@@ -26,4 +22,12 @@ def get_sandbox_config():
 
 
 def get_production_config():
+    print("WARNING: This is PROD config! You will be using REAL CASH MONEY...just letting yuo know bro...")
+    time.sleep(2)
     return get_config(PROD_CONFIG_PATH)
+
+
+CONFIG_CHOICES = {
+    "1": get_sandbox_config,
+    "2": get_production_config,
+}
