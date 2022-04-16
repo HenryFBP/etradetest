@@ -1,5 +1,7 @@
 """This Python script provides examples on using the E*TRADE API endpoints"""
 from __future__ import print_function
+
+import os.path
 import webbrowser
 import json
 import logging
@@ -13,7 +15,7 @@ from market.market import Market
 
 # loading configuration file
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(os.path.abspath('~/.etrade/config.secret.ini'))
 
 # logger settings
 logger = logging.getLogger('my_logger')
