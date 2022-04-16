@@ -1,13 +1,13 @@
 import json
 import logging
 from logging.handlers import RotatingFileHandler
-import configparser
 import random
 import re
 
 # loading configuration file
-config = configparser.ConfigParser()
-config.read('config.ini')
+import configlib
+
+config = configlib.CONFIG
 
 # logger settings
 logger = logging.getLogger('my_logger')

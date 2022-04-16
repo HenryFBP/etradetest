@@ -1,26 +1,21 @@
 """This Python script provides examples on using the E*TRADE API endpoints"""
 from __future__ import print_function
 
-import os.path
-import webbrowser
-import json
 import logging
-import configparser
-import sys
-import requests
-from rauth import OAuth1Service
+import webbrowser
 from logging.handlers import RotatingFileHandler
+
+from rauth import OAuth1Service
+
+import configlib
 from accounts.accounts import Accounts
 from market.market import Market
 
-# loading configuration file
-config = configparser.ConfigParser()
-config.read(os.path.abspath('~/.etrade/config.secret.ini'))
-
+config = configlib.CONFIG
 # logger settings
 logger = logging.getLogger('my_logger')
 logger.setLevel(logging.DEBUG)
-handler = RotatingFileHandler("python_client.log", maxBytes=5*1024*1024, backupCount=3)
+handler = RotatingFileHandler("python_client.log", maxBytes=5 * 1024 * 1024, backupCount=3)
 FORMAT = "%(asctime)-15s %(message)s"
 fmt = logging.Formatter(FORMAT, datefmt='%m/%d/%Y %I:%M:%S %p')
 handler.setFormatter(fmt)
@@ -54,7 +49,7 @@ def oauth():
             base_url = config["DEFAULT"]["PROD_BASE_URL"]
             break
         elif selection == "3":
-            break
+            raise Exception("goodbye :)")
         else:
             print("Unknown Option Selected!")
     print("")
@@ -71,8 +66,8 @@ def oauth():
 
     # Step 3: Exchange the authorized request token for an authenticated OAuth 1 session
     session = etrade.get_auth_session(request_token,
-                                  request_token_secret,
-                                  params={"oauth_verifier": text_code})
+                                      request_token_secret,
+                                      params={"oauth_verifier": text_code})
 
     main_menu(session, base_url)
 

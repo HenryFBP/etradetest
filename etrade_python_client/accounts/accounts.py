@@ -1,12 +1,12 @@
 import json
 import logging
-import configparser
 from logging.handlers import RotatingFileHandler
+
+import configlib
 from order.order import Order
 
 # loading configuration file
-config = configparser.ConfigParser()
-config.read('config.ini')
+config = configlib.CONFIG
 
 # logger settings
 logger = logging.getLogger('my_logger')
@@ -109,7 +109,7 @@ class Accounts:
         """
 
         # URL for the API endpoint
-        url =self.base_url + "/v1/accounts/" + self.account["accountIdKey"] + "/portfolio.json"
+        url = self.base_url + "/v1/accounts/" + self.account["accountIdKey"] + "/portfolio.json"
 
         # Make API call for GET request
         response = self.session.get(url, header_auth=True)
@@ -211,7 +211,8 @@ class Accounts:
                           + str('${:,.2f}'.format(balance_data["Computed"]["RealTimeValues"]["totalAccountValue"])))
                 if balance_data is not None and "Computed" in balance_data \
                         and "marginBuyingPower" in balance_data["Computed"]:
-                    print("Margin Buying Power: " + str('${:,.2f}'.format(balance_data["Computed"]["marginBuyingPower"])))
+                    print(
+                        "Margin Buying Power: " + str('${:,.2f}'.format(balance_data["Computed"]["marginBuyingPower"])))
                 if balance_data is not None and "Computed" in balance_data \
                         and "cashBuyingPower" in balance_data["Computed"]:
                     print("Cash Buying Power: " + str('${:,.2f}'.format(balance_data["Computed"]["cashBuyingPower"])))
