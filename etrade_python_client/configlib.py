@@ -1,17 +1,29 @@
 import configparser
 import os
 
+SANDBOX_CONFIG_PATH = '~/.etrade/config.sandbox.secret.ini'
+PROD_CONFIG_PATH = '~/.etrade/config.production.secret.ini'
 
-def get_config() -> configparser.ConfigParser:
-    conf_path = '~/.etrade/config.secret.ini'
-    conf_path = os.path.abspath(os.path.expanduser(conf_path))
-    if not (os.path.exists(conf_path)):
-        raise Exception("Please create a file at " + conf_path)
+CONFIG_CHOICES = {
+    "1": SANDBOX_CONFIG_PATH,
+    "2": PROD_CONFIG_PATH,
+}
+
+
+def get_config(config_path='~/.etrade/config.sandbox.secret.ini') -> configparser.ConfigParser:
+    config_path = os.path.abspath(os.path.expanduser(config_path))
+    if not (os.path.exists(config_path)):
+        raise Exception("Please create a file at " + config_path)
 
     # loading configuration file
     config = configparser.ConfigParser()
-    config.read(os.path.abspath(conf_path))
+    config.read(os.path.abspath(config_path))
     return config
 
 
-CONFIG = get_config()
+def get_sandbox_config():
+    return get_config(SANDBOX_CONFIG_PATH)
+
+
+def get_production_config():
+    return get_config(PROD_CONFIG_PATH)

@@ -7,11 +7,11 @@ from logging.handlers import RotatingFileHandler
 
 from rauth import OAuth1Service
 
-import configlib
+import someutils
 from accounts.accounts import Accounts
+from configlib import CONFIG_CHOICES, get_config
 from market.market import Market
 
-config = configlib.CONFIG
 # logger settings
 logger = logging.getLogger('my_logger')
 logger.setLevel(logging.DEBUG)
@@ -22,7 +22,7 @@ handler.setFormatter(fmt)
 logger.addHandler(handler)
 
 
-def oauth():
+def oauth(config):
     """Allows user authorization for the sample application with OAuth 1"""
     etrade = OAuth1Service(
         name="etrade",
@@ -69,10 +69,10 @@ def oauth():
                                       request_token_secret,
                                       params={"oauth_verifier": text_code})
 
-    main_menu(session, base_url)
+    main_menu(session, config, base_url)
 
 
-def main_menu(session, base_url):
+def main_menu(session, config, base_url):
     """
     Provides the different options for the sample application: Market Quotes, Account List
 
@@ -93,7 +93,7 @@ def main_menu(session, base_url):
             market = Market(session, base_url)
             market.quotes()
         elif selection == "2":
-            accounts = Accounts(session, base_url)
+            accounts = Accounts(session, base_url, config)
             accounts.account_list()
         elif selection == "3":
             break
@@ -102,4 +102,9 @@ def main_menu(session, base_url):
 
 
 if __name__ == "__main__":
-    oauth()
+    selected_path = someutils.user_choose_dict(CONFIG_CHOICES, "Please select a config path:")
+
+    if not selected_path:
+        raise Exception("Quitting.")
+
+    oauth(get_config(selected_path))

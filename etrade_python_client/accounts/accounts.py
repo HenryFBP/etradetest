@@ -5,9 +5,6 @@ from logging.handlers import RotatingFileHandler
 import configlib
 from order.order import Order
 
-# loading configuration file
-config = configlib.CONFIG
-
 # logger settings
 logger = logging.getLogger('my_logger')
 logger.setLevel(logging.DEBUG)
@@ -19,7 +16,7 @@ logger.addHandler(handler)
 
 
 class Accounts:
-    def __init__(self, session, base_url):
+    def __init__(self, session, base_url, config):
         """
         Initialize Accounts object with session and account information
 
@@ -28,6 +25,7 @@ class Accounts:
         self.session = session
         self.account = {}
         self.base_url = base_url
+        self.config = config
 
     def account_list(self):
         """

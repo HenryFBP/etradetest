@@ -4,11 +4,6 @@ from logging.handlers import RotatingFileHandler
 import random
 import re
 
-# loading configuration file
-import configlib
-
-config = configlib.CONFIG
-
 # logger settings
 logger = logging.getLogger('my_logger')
 logger.setLevel(logging.DEBUG)
@@ -21,9 +16,10 @@ logger.addHandler(handler)
 
 class Order:
 
-    def __init__(self, session, account, base_url):
+    def __init__(self, session, account, config, base_url):
         self.session = session
         self.account = account
+        self.config = config
         self.base_url = base_url
 
     def preview_order(self):
@@ -33,7 +29,6 @@ class Order:
         :param self: Pass in authenticated session and information on selected account
         """
 
-
         # User's order selection
         order = self.user_select_order()
 
@@ -41,7 +36,7 @@ class Order:
         url = self.base_url + "/v1/accounts/" + self.account["accountIdKey"] + "/orders/preview.json"
 
         # Add parameters and header information
-        headers = {"Content-Type": "application/xml", "consumerKey": config["DEFAULT"]["CONSUMER_KEY"]}
+        headers = {"Content-Type": "application/xml", "consumerKey": self.config["DEFAULT"]["CONSUMER_KEY"]}
 
         # Add payload for POST Request
         payload = """<PreviewOrderRequest>
@@ -166,7 +161,7 @@ class Order:
                     url = self.base_url + "/v1/accounts/" + account["accountIdKey"] + "/orders/preview.json"
 
                     # Add parameters and header information
-                    headers = {"Content-Type": "application/xml", "consumerKey": config["DEFAULT"]["CONSUMER_KEY"]}
+                    headers = {"Content-Type": "application/xml", "consumerKey": self.config["DEFAULT"]["CONSUMER_KEY"]}
 
                     # Add payload for POST Request
                     payload = """<PreviewOrderRequest>
@@ -214,7 +209,8 @@ class Order:
                         logger.debug("Response Body: %s", json.dumps(parsed, indent=4, sort_keys=True))
                         data = response.json()
                         print("\nPreview Order: ")
-                        if data is not None and "PreviewOrderResponse" in data and "PreviewIds" in data["PreviewOrderResponse"]:
+                        if data is not None and "PreviewOrderResponse" in data and "PreviewIds" in data[
+                            "PreviewOrderResponse"]:
                             for previewids in data["PreviewOrderResponse"]["PreviewIds"]:
                                 print("Preview ID: " + str(previewids["previewId"]))
                         else:
@@ -322,10 +318,12 @@ class Order:
                                     order_obj["order_action"] = instrument["orderAction"]
 
                                 if instrument is not None and 'orderedQuantity' in instrument:
-                                    order_str += "Quantity(Exec/Entered): " + str("{:,}".format(instrument["orderedQuantity"])) + " | "
+                                    order_str += "Quantity(Exec/Entered): " + str(
+                                        "{:,}".format(instrument["orderedQuantity"])) + " | "
                                     order_obj["quantity"] = instrument["orderedQuantity"]
 
-                                if instrument is not None and 'Product' in instrument and 'symbol' in instrument["Product"]:
+                                if instrument is not None and 'Product' in instrument and 'symbol' in instrument[
+                                    "Product"]:
                                     order_str += "Symbol: " + instrument["Product"]["symbol"] + " | "
                                     order_obj["symbol"] = instrument["Product"]["symbol"]
 
@@ -354,12 +352,14 @@ class Order:
                                     order_obj["netPrice"] = details["netPrice"]
 
                                 if status == "indiv_fills" and instrument is not None and 'filledQuantity' in instrument:
-                                    order_str += "Quantity Executed: " + str("{:,}".format(instrument["filledQuantity"])) + " | "
+                                    order_str += "Quantity Executed: " + str(
+                                        "{:,}".format(instrument["filledQuantity"])) + " | "
                                     order_obj["quantity"] = instrument["filledQuantity"]
 
                                 if status != "open" and status != "expired" and status != "rejected" and instrument is not None \
                                         and "averageExecutionPrice" in instrument:
-                                    order_str += "Price Executed: " + str('${:,.2f}'.format(instrument["averageExecutionPrice"])) + " | "
+                                    order_str += "Price Executed: " + str(
+                                        '${:,.2f}'.format(instrument["averageExecutionPrice"])) + " | "
 
                                 if status != "expired" and status != "rejected" and details is not None and 'status' in details:
                                     order_str += "Status: " + details["status"]
@@ -396,7 +396,7 @@ class Order:
                  "order_term": "",
                  "symbol": "",
                  "order_action": "",
-                 "limit_price":"",
+                 "limit_price": "",
                  "quantity": ""}
 
         price_type_options = ["MARKET", "LIMIT"]
@@ -474,7 +474,7 @@ class Order:
 
             # Add parameters and header information
             params_open = {"status": "OPEN"}
-            headers = {"consumerkey": config["DEFAULT"]["CONSUMER_KEY"]}
+            headers = {"consumerkey": self.config["DEFAULT"]["CONSUMER_KEY"]}
 
             # Make API call for GET request
             response_open = self.session.get(url, header_auth=True, params=params_open, headers=headers)
@@ -582,7 +582,7 @@ class Order:
                         url = self.base_url + "/v1/accounts/" + self.account["accountIdKey"] + "/orders/cancel.json"
 
                         # Add parameters and header information
-                        headers = {"Content-Type": "application/xml", "consumerKey": config["DEFAULT"]["CONSUMER_KEY"]}
+                        headers = {"Content-Type": "application/xml", "consumerKey": self.config["DEFAULT"]["CONSUMER_KEY"]}
 
                         # Add payload for POST Request
                         payload = """<CancelOrderRequest>
@@ -662,7 +662,7 @@ class Order:
             url = self.base_url + "/v1/accounts/" + self.account["accountIdKey"] + "/orders.json"
 
             # Add parameters and header information
-            headers = {"consumerkey": config["DEFAULT"]["CONSUMER_KEY"]}
+            headers = {"consumerkey": self.config["DEFAULT"]["CONSUMER_KEY"]}
             params_open = {"status": "OPEN"}
             params_executed = {"status": "EXECUTED"}
             params_indiv_fills = {"status": "INDIVIDUAL_FILLS"}
