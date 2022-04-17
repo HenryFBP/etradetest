@@ -30,3 +30,5 @@ You may have an expired token: <https://github.com/jessecooper/pyetrade/issues/5
 
 If it's older than 2 years... its dead becauasesusuuse
 ETrade engineers are too lazy to make automated key mgmt mechanisms ;3c
+
+either email them or make a new account...I figured the latter was faster :P
