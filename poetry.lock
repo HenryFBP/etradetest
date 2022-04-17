@@ -38,7 +38,7 @@ requests = ">=1.2.3"
 type = "git"
 url = "https://github.com/HenryFBP/rauth"
 reference = "master"
-resolved_reference = "a4afd74b8f5ccb425801db959601f8762c5d2204"
+resolved_reference = "f55b486dfeaeb41f2969ea9fbb4322915f78c213"
 
 [[package]]
 name = "requests"

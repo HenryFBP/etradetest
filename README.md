@@ -14,6 +14,10 @@ amnd fill it in w/ your etrade api key and secret
     poetry shell
     python .\EtradeTest\
 
+# update deps
+
+    poetry update
+
 # links
 
 see [./README-old.md](./README-old.md) for old shit
