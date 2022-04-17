@@ -1,4 +1,4 @@
-# edit: I have given up on ETrade and moving to Robin Hood :P
+# edit: I have given up on ETrade and am moving to Robin Hood :P
 
 # actually read this :3c you silly goose
 
