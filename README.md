@@ -1,12 +1,22 @@
+# actually read this :3c you silly goose
+
+copy `config.example.ini` to:
+
+    ~/.etrade/config.production.secret.ini
+    ~/.etrade/config.sandbox.secret.ini
+
+amnd fill it in w/ your etrade api key and secret
+
 # Running
 
+    pip install poetry
     poetry install
     poetry shell
     python .\EtradeTest\
 
 # links
 
-see [./README-old.md]
+see [./README-old.md](./README-old.md) for old shit
 
 - <https://www.youtube.com/watch?v=6pGUFM9yqWo>
 - <https://www.youtube.com/watch?v=lwJoPxOL_Zw>

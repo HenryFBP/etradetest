@@ -16,7 +16,7 @@ logger.addHandler(handler)
 
 
 class Accounts:
-    def __init__(self, session, base_url, config):
+    def __init__(self, config, session, base_url):
         """
         Initialize Accounts object with session and account information
 

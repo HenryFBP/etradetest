@@ -43,10 +43,10 @@ def oauth(config):
             print(entry + ")\t" + menu_items[entry])
         selection = input("Please select Consumer Key Type: ")
         if selection == "1":
-            base_url = config["DEFAULT"]["SANDBOX_BASE_URL"]
+            etrade_url = config["DEFAULT"]["SANDBOX_BASE_URL"]
             break
         elif selection == "2":
-            base_url = config["DEFAULT"]["PROD_BASE_URL"]
+            etrade_url = config["DEFAULT"]["PROD_BASE_URL"]
             break
         elif selection == "3":
             raise Exception("goodbye :)")
@@ -69,13 +69,14 @@ def oauth(config):
                                       request_token_secret,
                                       params={"oauth_verifier": text_code})
 
-    main_menu(session, config, base_url)
+    main_menu(session, config, etrade_url)
 
 
 def main_menu(session, config, base_url):
     """
     Provides the different options for the sample application: Market Quotes, Account List
 
+    :param base_url: ETrade URL
     :param session: authenticated session
     """
 
@@ -93,7 +94,7 @@ def main_menu(session, config, base_url):
             market = Market(session, base_url)
             market.quotes()
         elif selection == "2":
-            accounts = Accounts(session, base_url, config)
+            accounts = Accounts(config, session, base_url)
             accounts.account_list()
         elif selection == "3":
             break
