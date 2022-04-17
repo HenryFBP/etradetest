@@ -56,7 +56,11 @@ def oauth(config):
 
     # Step 1: Get OAuth 1 request token and secret
     request_token, request_token_secret = oauth.get_request_token(
-        params={"oauth_callback": "oob", "format": "json"})
+        params={
+            "oauth_callback": "oob",
+            "format": "json",
+            "credentials": "omit", #YOINK from https://stackoverflow.com/questions/66415479/etrade-api-invalid-consumer-key-and-or-session-token
+        })
 
     # Step 2: Go through the authentication flow. Login to E*TRADE.
     # After you login, the page will provide a text code to enter.
@@ -66,8 +70,8 @@ def oauth(config):
 
     # Step 3: Exchange the authorized request token for an authenticated OAuth 1 session
     session = oauth.get_auth_session(request_token,
-                                      request_token_secret,
-                                      params={"oauth_verifier": text_code})
+                                     request_token_secret,
+                                     params={"oauth_verifier": text_code})
 
     main_menu(session, config, etrade_url)
 
