@@ -11,7 +11,7 @@ pickle.dump(asklist, openasklist)
 openasklist.close()
 
 
-class Buylow:
+class MovingWeeklyAverage:
 
     def __init__(self, config, session, account, base_url):
         self.config = config

@@ -24,7 +24,7 @@ logger.addHandler(handler)
 
 def oauth(config):
     """Allows user authorization for the sample application with OAuth 1"""
-    etrade = OAuth1Service(
+    oauth = OAuth1Service(
         name="etrade",
         consumer_key=config["DEFAULT"]["CONSUMER_KEY"],
         consumer_secret=config["DEFAULT"]["CONSUMER_SECRET"],
@@ -55,17 +55,17 @@ def oauth(config):
     print("")
 
     # Step 1: Get OAuth 1 request token and secret
-    request_token, request_token_secret = etrade.get_request_token(
+    request_token, request_token_secret = oauth.get_request_token(
         params={"oauth_callback": "oob", "format": "json"})
 
     # Step 2: Go through the authentication flow. Login to E*TRADE.
     # After you login, the page will provide a text code to enter.
-    authorize_url = etrade.authorize_url.format(etrade.consumer_key, request_token)
+    authorize_url = oauth.authorize_url.format(oauth.consumer_key, request_token)
     webbrowser.open(authorize_url)
     text_code = input("Please accept agreement and enter text code from browser: ")
 
     # Step 3: Exchange the authorized request token for an authenticated OAuth 1 session
-    session = etrade.get_auth_session(request_token,
+    session = oauth.get_auth_session(request_token,
                                       request_token_secret,
                                       params={"oauth_verifier": text_code})
 

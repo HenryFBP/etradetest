@@ -6,7 +6,7 @@ authors = ["Henry Post <HenryFBP@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3"
-rauth = "0.7.3"
+rauth = { git = "https://github.com/HenryFBP/rauth", branch = "master" }
 
 [tool.poetry.dev-dependencies]
 
