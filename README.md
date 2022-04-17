@@ -7,6 +7,8 @@ copy `config.example.ini` to:
 
 amnd fill it in w/ your etrade api key and secret. get API keys at <https://developer.etrade.com/home>
 
+by the way.. for the LOVE OF GOD, PLEASE READ THIS CODE BEFORE YOU PUT YOUR ETRADE API KEYS IN! You don't know what this code does, it might steal your API keys and then steal your money.
+
 # Running
 
     pip install poetry
@@ -36,3 +38,5 @@ If it's older than 2 years... its dead becauasesusuuse
 ETrade engineers are too lazy to make automated key mgmt mechanisms ;3c
 
 either email them or make a new account...I figured the latter was faster :P
+EDIT: Making a new account under the same email does NOT give you a new API key... ;_;
+I guess you have to call their #? `800-387-2331`
