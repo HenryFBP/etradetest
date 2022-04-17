@@ -13,7 +13,7 @@ def user_choose_dict(
     while True:
         for k in d.keys():
             v = d[k]
-            print("- [{:^3s}] {}".format(k, v))
+            print("- [{:^3s}] {}".format(k, repr(v)))
         selection = input(
             prompt +
             (" ({} to quit)".format(quitkey) if quitkey else '') +
