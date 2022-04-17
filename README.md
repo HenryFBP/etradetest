@@ -5,7 +5,7 @@ copy `config.example.ini` to:
     ~/.etrade/config.production.secret.ini
     ~/.etrade/config.sandbox.secret.ini
 
-amnd fill it in w/ your etrade api key and secret
+amnd fill it in w/ your etrade api key and secret. get API keys at <https://developer.etrade.com/home>
 
 # Running
 
